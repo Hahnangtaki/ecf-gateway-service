@@ -45,6 +45,19 @@ public class CacheConfiguration {
             createCache(cm, id.tech.cakra.ecfgatewaysvc.domain.User.class.getName());
             createCache(cm, id.tech.cakra.ecfgatewaysvc.domain.Authority.class.getName());
             createCache(cm, id.tech.cakra.ecfgatewaysvc.domain.User.class.getName() + ".authorities");
+            createCache(cm, id.tech.cakra.ecfgatewaysvc.domain.GlobalParameter.class.getName());
+            createCache(cm, id.tech.cakra.ecfgatewaysvc.domain.Category.class.getName());
+            createCache(cm, id.tech.cakra.ecfgatewaysvc.domain.City.class.getName());
+            createCache(cm, id.tech.cakra.ecfgatewaysvc.domain.Country.class.getName());
+            createCache(cm, id.tech.cakra.ecfgatewaysvc.domain.Country.class.getName() + ".provinces");
+            createCache(cm, id.tech.cakra.ecfgatewaysvc.domain.Province.class.getName());
+            createCache(cm, id.tech.cakra.ecfgatewaysvc.domain.Province.class.getName() + ".cities");
+            createCache(cm, id.tech.cakra.ecfgatewaysvc.domain.Bank.class.getName());
+            createCache(cm, id.tech.cakra.ecfgatewaysvc.domain.Bank.class.getName() + ".companyBanks");
+            createCache(cm, id.tech.cakra.ecfgatewaysvc.domain.CompanyBank.class.getName());
+            createCache(cm, id.tech.cakra.ecfgatewaysvc.domain.Currency.class.getName());
+            createCache(cm, id.tech.cakra.ecfgatewaysvc.domain.Currency.class.getName() + ".companyBanks");
+            createCache(cm, id.tech.cakra.ecfgatewaysvc.domain.Tax.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

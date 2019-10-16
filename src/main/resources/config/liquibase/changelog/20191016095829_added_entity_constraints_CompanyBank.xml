@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity CompanyBank.
+    -->
+    <changeSet id="20191016095829-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="bank_id"
+                                 baseTableName="company_bank"
+                                 constraintName="fk_company_bank_bank_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="bank"/>
+
+        <addForeignKeyConstraint baseColumnNames="currency_id"
+                                 baseTableName="company_bank"
+                                 constraintName="fk_company_bank_currency_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="currency"/>
+
+    </changeSet>
+</databaseChangeLog>

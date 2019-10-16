@@ -1,0 +1,217 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
+
+import { getEntity, updateEntity, createEntity, reset } from './country.reducer';
+import { ICountry } from 'app/shared/model/country.model';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
+
+export interface ICountryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+
+export interface ICountryUpdateState {
+  isNew: boolean;
+}
+
+export class CountryUpdate extends React.Component<ICountryUpdateProps, ICountryUpdateState> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isNew: !this.props.match.params || !this.props.match.params.id
+    };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
+  }
+
+  componentDidMount() {
+    if (this.state.isNew) {
+      this.props.reset();
+    } else {
+      this.props.getEntity(this.props.match.params.id);
+    }
+  }
+
+  saveEntity = (event, errors, values) => {
+    values.createDate = convertDateTimeToServer(values.createDate);
+    values.lastModificationDate = convertDateTimeToServer(values.lastModificationDate);
+
+    if (errors.length === 0) {
+      const { countryEntity } = this.props;
+      const entity = {
+        ...countryEntity,
+        ...values
+      };
+
+      if (this.state.isNew) {
+        this.props.createEntity(entity);
+      } else {
+        this.props.updateEntity(entity);
+      }
+    }
+  };
+
+  handleClose = () => {
+    this.props.history.push('/entity/country');
+  };
+
+  render() {
+    const { countryEntity, loading, updating } = this.props;
+    const { isNew } = this.state;
+
+    return (
+      <div>
+        <Row className="justify-content-center">
+          <Col md="8">
+            <h2 id="ecfgatewaysvcApp.country.home.createOrEditLabel">Create or edit a Country</h2>
+          </Col>
+        </Row>
+        <Row className="justify-content-center">
+          <Col md="8">
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              <AvForm model={isNew ? {} : countryEntity} onSubmit={this.saveEntity}>
+                {!isNew ? (
+                  <AvGroup>
+                    <Label for="country-id">ID</Label>
+                    <AvInput id="country-id" type="text" className="form-control" name="id" required readOnly />
+                  </AvGroup>
+                ) : null}
+                <AvGroup>
+                  <Label id="countryCodeLabel" for="country-countryCode">
+                    Country Code
+                  </Label>
+                  <AvField
+                    id="country-countryCode"
+                    type="text"
+                    name="countryCode"
+                    validate={{
+                      maxLength: { value: 10, errorMessage: 'This field cannot be longer than 10 characters.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="countryNameLabel" for="country-countryName">
+                    Country Name
+                  </Label>
+                  <AvField
+                    id="country-countryName"
+                    type="text"
+                    name="countryName"
+                    validate={{
+                      maxLength: { value: 60, errorMessage: 'This field cannot be longer than 60 characters.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="nationalityLabel" for="country-nationality">
+                    Nationality
+                  </Label>
+                  <AvField
+                    id="country-nationality"
+                    type="text"
+                    name="nationality"
+                    validate={{
+                      maxLength: { value: 60, errorMessage: 'This field cannot be longer than 60 characters.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="createSystemDateLabel" for="country-createSystemDate">
+                    Create System Date
+                  </Label>
+                  <AvField id="country-createSystemDate" type="date" className="form-control" name="createSystemDate" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="createDateLabel" for="country-createDate">
+                    Create Date
+                  </Label>
+                  <AvInput
+                    id="country-createDate"
+                    type="datetime-local"
+                    className="form-control"
+                    name="createDate"
+                    placeholder={'YYYY-MM-DD HH:mm'}
+                    value={isNew ? null : convertDateTimeFromServer(this.props.countryEntity.createDate)}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="createUserIdLabel" for="country-createUserId">
+                    Create User Id
+                  </Label>
+                  <AvField id="country-createUserId" type="string" className="form-control" name="createUserId" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="lastModificationSystemDateLabel" for="country-lastModificationSystemDate">
+                    Last Modification System Date
+                  </Label>
+                  <AvField id="country-lastModificationSystemDate" type="date" className="form-control" name="lastModificationSystemDate" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="lastModificationDateLabel" for="country-lastModificationDate">
+                    Last Modification Date
+                  </Label>
+                  <AvInput
+                    id="country-lastModificationDate"
+                    type="datetime-local"
+                    className="form-control"
+                    name="lastModificationDate"
+                    placeholder={'YYYY-MM-DD HH:mm'}
+                    value={isNew ? null : convertDateTimeFromServer(this.props.countryEntity.lastModificationDate)}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="lastModificationUserIdLabel" for="country-lastModificationUserId">
+                    Last Modification User Id
+                  </Label>
+                  <AvField id="country-lastModificationUserId" type="string" className="form-control" name="lastModificationUserId" />
+                </AvGroup>
+                <Button tag={Link} id="cancel-save" to="/entity/country" replace color="info">
+                  <FontAwesomeIcon icon="arrow-left" />
+                  &nbsp;
+                  <span className="d-none d-md-inline">Back</span>
+                </Button>
+                &nbsp;
+                <Button color="primary" id="save-entity" type="submit" disabled={updating}>
+                  <FontAwesomeIcon icon="save" />
+                  &nbsp; Save
+                </Button>
+              </AvForm>
+            )}
+          </Col>
+        </Row>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = (storeState: IRootState) => ({
+  countryEntity: storeState.country.entity,
+  loading: storeState.country.loading,
+  updating: storeState.country.updating,
+  updateSuccess: storeState.country.updateSuccess
+});
+
+const mapDispatchToProps = {
+  getEntity,
+  updateEntity,
+  createEntity,
+  reset
+};
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CountryUpdate);
