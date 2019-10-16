@@ -11,6 +11,42 @@ import activate, { ActivateState } from 'app/modules/account/activate/activate.r
 import password, { PasswordState } from 'app/modules/account/password/password.reducer';
 import settings, { SettingsState } from 'app/modules/account/settings/settings.reducer';
 import passwordReset, { PasswordResetState } from 'app/modules/account/password-reset/password-reset.reducer';
+// prettier-ignore
+import globalParameter, {
+  GlobalParameterState
+} from 'app/entities/global-parameter/global-parameter.reducer';
+// prettier-ignore
+import category, {
+  CategoryState
+} from 'app/entities/category/category.reducer';
+// prettier-ignore
+import city, {
+  CityState
+} from 'app/entities/city/city.reducer';
+// prettier-ignore
+import country, {
+  CountryState
+} from 'app/entities/country/country.reducer';
+// prettier-ignore
+import province, {
+  ProvinceState
+} from 'app/entities/province/province.reducer';
+// prettier-ignore
+import bank, {
+  BankState
+} from 'app/entities/bank/bank.reducer';
+// prettier-ignore
+import companyBank, {
+  CompanyBankState
+} from 'app/entities/company-bank/company-bank.reducer';
+// prettier-ignore
+import currency, {
+  CurrencyState
+} from 'app/entities/currency/currency.reducer';
+// prettier-ignore
+import tax, {
+  TaxState
+} from 'app/entities/tax/tax.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -23,6 +59,15 @@ export interface IRootState {
   readonly passwordReset: PasswordResetState;
   readonly password: PasswordState;
   readonly settings: SettingsState;
+  readonly globalParameter: GlobalParameterState;
+  readonly category: CategoryState;
+  readonly city: CityState;
+  readonly country: CountryState;
+  readonly province: ProvinceState;
+  readonly bank: BankState;
+  readonly companyBank: CompanyBankState;
+  readonly currency: CurrencyState;
+  readonly tax: TaxState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -37,6 +82,15 @@ const rootReducer = combineReducers<IRootState>({
   passwordReset,
   password,
   settings,
+  globalParameter,
+  category,
+  city,
+  country,
+  province,
+  bank,
+  companyBank,
+  currency,
+  tax,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });
